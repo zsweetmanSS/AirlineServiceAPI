@@ -25,14 +25,18 @@ namespace AirlineServiceAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Passenger>>> GetPassengers()
         {
-            return await _context.Passengers.ToListAsync();
+            return await _context.Passengers
+                .Include(p => p.Bookings)
+                .ToListAsync();
         }
 
         // GET: api/Passengers/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Passenger>> GetPassenger(int id)
         {
-            var passenger = await _context.Passengers.FindAsync(id);
+            var passenger = await _context.Passengers
+                .Include(p => p.Bookings)
+                .FirstAsync(p => p.Id == id);
 
             if (passenger == null)
             {

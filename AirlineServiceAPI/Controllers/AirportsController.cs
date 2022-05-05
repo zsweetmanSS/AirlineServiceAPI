@@ -26,8 +26,6 @@ namespace AirlineServiceAPI.Controllers
         public async Task<ActionResult<IEnumerable<Airport>>> GetAirports()
         {
             return await _context.Airports
-                .Include(a => a.ArrivingFlights)
-                .Include(a => a.DepartingFlights)
                 .ToListAsync();
         }
 
@@ -36,8 +34,6 @@ namespace AirlineServiceAPI.Controllers
         public async Task<ActionResult<Airport>> GetAirport(int id)
         {
             var airport = await _context.Airports
-                .Include(a => a.ArrivingFlights)
-                .Include(a => a.DepartingFlights)
                 .FirstAsync(a => a.Id == id);
 
             if (airport == null)

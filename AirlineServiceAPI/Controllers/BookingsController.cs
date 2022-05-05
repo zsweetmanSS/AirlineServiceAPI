@@ -91,14 +91,31 @@ namespace AirlineServiceAPI.Controllers
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBooking", new { id = booking.ConfirmationNumber }, booking);
+            return CreatedAtAction("GetBooking", new { confirmationNumber = booking.ConfirmationNumber }, booking);
+        }
+
+        // POST: api/Bookings/FlightNumber/PassengerId
+        [HttpPost("{flightNumber}/{passengerId}")]
+        public async Task<ActionResult<Booking>> CreateNewBooking(int flightNumber, int passengerId) {
+            //Booking bookingWithInclude = _context.Bookings.Include(b => b.Flight).Include(b => b.)
+            var flight = await _context.Flights
+                .FirstAsync(f => f.Number == flightNumber);
+            var passenger = await _context.Passengers.FirstAsync(p => p.Id == passengerId);
+            Booking newBooking = new Booking {Passenger = passenger, Flight = flight};
+            if (newBooking.Flight.NumberBooked >= newBooking.Flight.MaxCapacity) {
+                return BadRequest("Flight is full");
+            }
+            _context.Bookings.Add(newBooking);
+            await _context.SaveChangesAsync();
+
+            return Ok(newBooking);
         }
 
         // DELETE: api/Bookings/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBooking(int id)
+        [HttpDelete("{confirmationNumber}")]
+        public async Task<IActionResult> DeleteBooking(int confirmationNumber)
         {
-            var booking = await _context.Bookings.FindAsync(id);
+            var booking = await _context.Bookings.FindAsync(confirmationNumber);
             if (booking == null)
             {
                 return NotFound();
@@ -110,9 +127,9 @@ namespace AirlineServiceAPI.Controllers
             return NoContent();
         }
 
-        private bool BookingExists(int id)
+        private bool BookingExists(int confirmationNumber)
         {
-            return _context.Bookings.Any(e => e.ConfirmationNumber == id);
+            return _context.Bookings.Any(e => e.ConfirmationNumber == confirmationNumber);
         }
     }
 }

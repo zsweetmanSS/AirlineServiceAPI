@@ -16,20 +16,20 @@ namespace AirlineService.Data {
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             modelBuilder.Entity<Flight>()
                 .HasOne(f => f.ArrivalAirport)
-                .WithMany(a => a.ArrivingFlights)
-                .OnDelete(DeleteBehavior.SetNull);
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Flight>()
                 .HasOne(f => f.DepartureAirport)
-                .WithMany(a => a.DepartingFlights)
-                .OnDelete(DeleteBehavior.SetNull);
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Flight>()
                 .HasMany(f => f.Bookings)
                 .WithOne(b => b.Flight)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Entity<Passenger>()
                 .HasMany(p => p.Bookings)
                 .WithOne(b => b.Passenger)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.NoAction);
         }
         public DbSet<Airport> Airports { get; set; } = null!;
         public DbSet<Flight> Flights { get; set; } = null!;

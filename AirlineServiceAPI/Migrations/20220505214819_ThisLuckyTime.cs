@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AirlineServiceAPI.Migrations
 {
-    public partial class FirstMigrate : Migration
+    public partial class ThisLuckyTime : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,7 +48,8 @@ namespace AirlineServiceAPI.Migrations
                     ArrivalDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     MaxCapacity = table.Column<int>(type: "int", nullable: false),
                     ArrivalAirportId = table.Column<int>(type: "int", nullable: false),
-                    DepartureAirportId = table.Column<int>(type: "int", nullable: false)
+                    DepartureAirportId = table.Column<int>(type: "int", nullable: false),
+                    NumberBooked = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,14 +58,12 @@ namespace AirlineServiceAPI.Migrations
                         name: "FK_Flights_Airports_ArrivalAirportId",
                         column: x => x.ArrivalAirportId,
                         principalTable: "Airports",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Flights_Airports_DepartureAirportId",
                         column: x => x.DepartureAirportId,
                         principalTable: "Airports",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -83,14 +82,12 @@ namespace AirlineServiceAPI.Migrations
                         name: "FK_Bookings_Flights_FlightNumber",
                         column: x => x.FlightNumber,
                         principalTable: "Flights",
-                        principalColumn: "Number",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Number");
                     table.ForeignKey(
                         name: "FK_Bookings_Passengers_PassengerId",
                         column: x => x.PassengerId,
                         principalTable: "Passengers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

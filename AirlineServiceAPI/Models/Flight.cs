@@ -14,6 +14,7 @@ namespace AirlineService.Data {
         public int MaxCapacity { get; set; }
         public Airport ArrivalAirport { get; set; } = null!;
         public Airport DepartureAirport { get; set; } = null!;
-        public List<Booking>? Bookings { get; set; }
+        public ICollection<Booking>? Bookings { get; set; }
+        public int NumberBooked { get; set; }
     }
 }

@@ -12,30 +12,33 @@ namespace AirlineServiceAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FlightsController : ControllerBase
-    {
+    public class FlightsController : ControllerBase {
         private readonly AirlineContext _context;
 
-        public FlightsController(AirlineContext context)
-        {
+        public FlightsController(AirlineContext context) {
             _context = context;
         }
 
         // GET: api/Flights
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Flight>>> GetFlights()
-        {
-            return await _context.Flights.ToListAsync();
+        public async Task<ActionResult<IEnumerable<Flight>>> GetFlights() {
+            return await _context.Flights
+                .Include(f => f.ArrivalAirport)
+                .Include(f => f.DepartureAirport)
+                .Include(f => f.Bookings)
+                .ToListAsync();
         }
 
         // GET: api/Flights/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Flight>> GetFlight(int id)
-        {
-            var flight = await _context.Flights.FindAsync(id);
+        [HttpGet("{number}")]
+        public async Task<ActionResult<Flight>> GetFlight(int number) {
+            var flight = await _context.Flights
+                .Include(f => f.ArrivalAirport)
+                .Include(f => f.DepartureAirport)
+                .Include(f => f.Bookings)
+                .FirstAsync(f => f.Number == number);
 
-            if (flight == null)
-            {
+            if (flight == null) {
                 return NotFound();
             }
 
@@ -43,29 +46,23 @@ namespace AirlineServiceAPI.Controllers
         }
 
         // PUT: api/Flights/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFlight(int id, Flight flight)
-        {
-            if (id != flight.Number)
-            {
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linknumber=2123754
+        [HttpPut("{number}")]
+        public async Task<IActionResult> PutFlight(int number, Flight flight) {
+            if (number != flight.Number) {
                 return BadRequest();
             }
 
             _context.Entry(flight).State = EntityState.Modified;
 
-            try
-            {
+            try {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FlightExists(id))
-                {
+            catch (DbUpdateConcurrencyException) {
+                if (!FlightExists(number)) {
                     return NotFound();
                 }
-                else
-                {
+                else {
                     throw;
                 }
             }
@@ -74,21 +71,21 @@ namespace AirlineServiceAPI.Controllers
         }
 
         // POST: api/Flights
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linknumber=2123754
         [HttpPost]
-        public async Task<ActionResult<Flight>> PostFlight(Flight flight)
-        {
+        public async Task<ActionResult<Flight>> PostFlight(Flight flight) {
             _context.Flights.Add(flight);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFlight", new { id = flight.Number }, flight);
+            return CreatedAtAction("GetFlight", new { number = flight.Number }, flight);
         }
 
+
         // DELETE: api/Flights/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFlight(int id)
+        [HttpDelete("{number}")]
+        public async Task<IActionResult> DeleteFlight(int number)
         {
-            var flight = await _context.Flights.FindAsync(id);
+            var flight = await _context.Flights.FindAsync(number);
             if (flight == null)
             {
                 return NotFound();
@@ -100,9 +97,9 @@ namespace AirlineServiceAPI.Controllers
             return NoContent();
         }
 
-        private bool FlightExists(int id)
+        private bool FlightExists(int number)
         {
-            return _context.Flights.Any(e => e.Number == id);
+            return _context.Flights.Any(e => e.Number == number);
         }
     }
 }

@@ -85,6 +85,9 @@ namespace AirlineServiceAPI.Migrations
                     b.Property<int>("MaxCapacity")
                         .HasColumnType("int");
 
+                    b.Property<int>("NumberBooked")
+                        .HasColumnType("int");
+
                     b.HasKey("Number");
 
                     b.HasIndex("ArrivalAirportId");
@@ -127,13 +130,13 @@ namespace AirlineServiceAPI.Migrations
                     b.HasOne("AirlineService.Data.Flight", "Flight")
                         .WithMany("Bookings")
                         .HasForeignKey("FlightNumber")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("AirlineService.Data.Passenger", "Passenger")
                         .WithMany("Bookings")
                         .HasForeignKey("PassengerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Flight");
@@ -146,13 +149,13 @@ namespace AirlineServiceAPI.Migrations
                     b.HasOne("AirlineService.Data.Airport", "ArrivalAirport")
                         .WithMany()
                         .HasForeignKey("ArrivalAirportId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("AirlineService.Data.Airport", "DepartureAirport")
                         .WithMany()
                         .HasForeignKey("DepartureAirportId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("ArrivalAirport");
