@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AirlineService.Data;
+using AirlineServiceAPI.ViewModels;
 
 namespace AirlineServiceAPI.Controllers
 {
@@ -25,25 +26,32 @@ namespace AirlineServiceAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Passenger>>> GetPassengers()
         {
-            return await _context.Passengers
-                .Include(p => p.Bookings)
-                .ToListAsync();
+            return await _context.Passengers.ToListAsync();
         }
 
         // GET: api/Passengers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Passenger>> GetPassenger(int id)
+        public async Task<ActionResult<PassengerBookingsViewModel>> GetPassenger(int id)
         {
+            
             var passenger = await _context.Passengers
-                .Include(p => p.Bookings)
-                .FirstAsync(p => p.Id == id);
-
+                //.Include(p => p.Bookings)
+                .FindAsync(id);
+            var bookings = await _context.Bookings
+                .Where(b => b.PassengerId == id)
+                .ToListAsync();
+            var passengerVM = new PassengerBookingsViewModel() { 
+                Id = id,
+                Name = passenger.Name,
+                Job = passenger.Job,
+                Email = passenger.Email,
+                Age = passenger.Age,
+                Bookings = bookings};
             if (passenger == null)
             {
                 return NotFound();
             }
-
-            return passenger;
+            return passengerVM;
         }
 
         // PUT: api/Passengers/5

@@ -11,5 +11,7 @@ namespace AirlineService.Data {
         public int ConfirmationNumber { get; set; }
         public Flight Flight { get; set; } = null!;
         public Passenger Passenger { get; set; } = null!;
+        public int PassengerId { get; set; }
+        public int FlightNumber { get; set; }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AirlineService.Data;
+using AirlineServiceAPI.View_Models;
 
 namespace AirlineServiceAPI.Controllers
 {
@@ -23,26 +24,37 @@ namespace AirlineServiceAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Flight>>> GetFlights() {
             return await _context.Flights
-                .Include(f => f.ArrivalAirport)
-                .Include(f => f.DepartureAirport)
-                .Include(f => f.Bookings)
                 .ToListAsync();
         }
 
         // GET: api/Flights/5
         [HttpGet("{number}")]
-        public async Task<ActionResult<Flight>> GetFlight(int number) {
+        public async Task<ActionResult<FlightBookingsViewModel>> GetFlight(int number) {
             var flight = await _context.Flights
                 .Include(f => f.ArrivalAirport)
                 .Include(f => f.DepartureAirport)
-                .Include(f => f.Bookings)
+                //.Include(f => f.Bookings)
                 .FirstAsync(f => f.Number == number);
+            var bookings = await _context.Bookings
+                .Include(b => b.Flight)
+                .Where(b => b.FlightNumber == number)
+                .ToListAsync();
+            FlightBookingsViewModel flightVM = new FlightBookingsViewModel() {
+                Number = number,
+                DepartureDate = flight.DepartureDate,
+                ArrivalDate = flight.ArrivalDate,
+                MaxCapacity = flight.MaxCapacity,
+                ArrivalAirport = flight.ArrivalAirport,
+                DepartureAirport = flight.DepartureAirport,
+                Bookings = bookings,
+                numberBooked = bookings.Count()
+            };
 
             if (flight == null) {
                 return NotFound();
             }
 
-            return flight;
+            return flightVM;
         }
 
         // PUT: api/Flights/5

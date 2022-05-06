@@ -15,10 +15,12 @@ namespace AirlineServiceAPI.Controllers
     public class BookingsController : ControllerBase
     {
         private readonly AirlineContext _context;
+        private readonly ILogger<BookingsController> _logger;
 
-        public BookingsController(AirlineContext context)
+        public BookingsController(ILogger<BookingsController> logger, AirlineContext context)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/Bookings
@@ -85,9 +87,9 @@ namespace AirlineServiceAPI.Controllers
         public async Task<ActionResult<Booking>> PostBooking(Booking booking)
         {
             //Booking bookingWithInclude = _context.Bookings.Include(b => b.Flight).Include(b => b.)
-            if (booking.Flight.Bookings.Count >= booking.Flight.MaxCapacity) {
-                return BadRequest("Flight is full");
-            }
+            //if (booking.Flight.Bookings.Count >= booking.Flight.MaxCapacity) {
+            //    return BadRequest("Flight is full");
+            //}
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
 
@@ -102,13 +104,14 @@ namespace AirlineServiceAPI.Controllers
                 .FirstAsync(f => f.Number == flightNumber);
             var passenger = await _context.Passengers.FirstAsync(p => p.Id == passengerId);
             Booking newBooking = new Booking {Passenger = passenger, Flight = flight};
-            if (newBooking.Flight.NumberBooked >= newBooking.Flight.MaxCapacity) {
+            //TODO: restructure logic
+            if (FlightIsFull(flight))
                 return BadRequest("Flight is full");
-            }
+            
             _context.Bookings.Add(newBooking);
             await _context.SaveChangesAsync();
-
             return Ok(newBooking);
+            //return Ok();
         }
 
         // DELETE: api/Bookings/5
@@ -130,6 +133,17 @@ namespace AirlineServiceAPI.Controllers
         private bool BookingExists(int confirmationNumber)
         {
             return _context.Bookings.Any(e => e.ConfirmationNumber == confirmationNumber);
+        }
+
+        private bool FlightIsFull(Flight flight) {
+            //TODO:math
+            var numberBooked = _context.Bookings
+                .Include(b => b.Flight)
+                .Where(b => b.FlightNumber == flight.Number)
+                .Count();
+            if (numberBooked >= flight.MaxCapacity)
+                return true;
+            return false;
         }
     }
 }

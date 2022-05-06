@@ -13,10 +13,11 @@ IWebHostEnvironment environment = builder.Environment;
 // Add services to the container.
 
 builder.Services.AddControllers();
-//builder.Services.Configure<JsonSerializerOptions>(options =>
-//{
-//    options.ReferenceHandler = ReferenceHandler.Preserve;
-//});
+builder.Services.AddLogging();
+builder.Services.Configure<JsonSerializerOptions>(options =>
+{
+   options.ReferenceHandler = ReferenceHandler.Preserve;
+});
 //JsonSerializerOptions SerializerOptions = new() { ReferenceHandler = ReferenceHandler.IgnoreCycles };
 
 builder.Services.AddDbContext<AirlineContext>(options =>

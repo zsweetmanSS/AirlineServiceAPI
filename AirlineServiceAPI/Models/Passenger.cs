@@ -11,6 +11,6 @@ namespace AirlineService.Data {
         public string Job { get; set; } = null!;
         public string Email { get; set; } = null!;
         public int Age { get; set; }
-        public List<Booking>? Bookings { get; set; }
+        //public ICollection<Booking>? Bookings { get; set; }
     }
 }

@@ -24,7 +24,8 @@ namespace AirlineServiceAPI.Data {
                 }
                 if (!context.Flights.Any()) {
                     var flightsToAdd = new Flight[] {
-                        new Flight {MaxCapacity=150,NumberBooked=0,ArrivalAirport=context.Airports.First(a => a.Id == 1),DepartureAirport=context.Airports.First(a => a.Id == 2)}
+                        new Flight {MaxCapacity=150,ArrivalAirport=context.Airports.First(a => a.Id == 1),DepartureAirport=context.Airports.First(a => a.Id == 2)},
+                        new Flight {MaxCapacity=1,ArrivalAirport=context.Airports.First(a => a.Id == 1),DepartureAirport=context.Airports.First(a => a.Id == 2)}
                     };
                     context.Flights.AddRange(flightsToAdd);
                     context.SaveChanges();

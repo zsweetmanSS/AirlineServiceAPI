@@ -22,14 +22,16 @@ namespace AirlineService.Data {
                 .HasOne(f => f.DepartureAirport)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Flight>()
-                .HasMany(f => f.Bookings)
-                .WithOne(b => b.Flight)
-                .OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Passenger>()
-                .HasMany(p => p.Bookings)
-                .WithOne(b => b.Passenger)
-                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.Flight)
+                .WithMany()
+                .HasForeignKey(b => b.FlightNumber)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Booking>()
+                .HasOne(b => b.Passenger)
+                .WithMany()
+                .HasForeignKey(b => b.PassengerId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
         public DbSet<Airport> Airports { get; set; } = null!;
         public DbSet<Flight> Flights { get; set; } = null!;

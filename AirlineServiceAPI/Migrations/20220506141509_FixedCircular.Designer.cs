@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirlineServiceAPI.Migrations
 {
     [DbContext(typeof(AirlineContext))]
-    [Migration("20220505214819_ThisLuckyTime")]
-    partial class ThisLuckyTime
+    [Migration("20220506141509_FixedCircular")]
+    partial class FixedCircular
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

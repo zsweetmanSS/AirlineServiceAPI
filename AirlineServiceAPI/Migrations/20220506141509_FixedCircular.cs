@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AirlineServiceAPI.Migrations
 {
-    public partial class ThisLuckyTime : Migration
+    public partial class FixedCircular : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -72,8 +72,8 @@ namespace AirlineServiceAPI.Migrations
                 {
                     ConfirmationNumber = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FlightNumber = table.Column<int>(type: "int", nullable: false),
-                    PassengerId = table.Column<int>(type: "int", nullable: false)
+                    PassengerId = table.Column<int>(type: "int", nullable: false),
+                    FlightNumber = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
