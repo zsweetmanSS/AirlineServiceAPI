@@ -47,7 +47,7 @@ class FlightView extends React.Component<FlightViewProps, FlightViewState> {
                                     <td>{Flight.departureDate.substring(0,10)}</td>
                                     <td>{Flight.departureDate.substring(11,19)}</td>
                                     <td>{Flight.arrivalDate.substring(0,10)}</td>
-                                    <td>{Flight.departureDate.substring(11,19)}</td>
+                                    <td>{Flight.arrivalDate.substring(11,19)}</td>
                                     <td>{Flight.departureAirport.name}</td>
                                     <td>{Flight.arrivalAirport.name}</td>
                                     <td>{Flight.maxCapacity}</td>
