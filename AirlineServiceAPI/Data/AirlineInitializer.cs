@@ -8,8 +8,8 @@ namespace AirlineServiceAPI.Data {
                 context.Database.EnsureCreated();
                 if (!context.Passengers.Any()) {
                     var passengersToAdd = new Passenger[] {
-                        new Passenger {Name="Zane Sweetman",Job="Programmer",Email="zane.sweetman@gmail.com",Age=27},
-                        new Passenger {Name="Joe Shmoe",Job="Handiman",Email="JShmoe02@yahoo.com",Age=54}
+                        new Passenger {FirstName="Zane",LastName="Sweetman",Job="Programmer",Email="zane.sweetman@gmail.com",Age=27},
+                        new Passenger {FirstName="Joe",LastName="Shmoe",Job="Handiman",Email="JShmoe02@yahoo.com",Age=54}
                     };
                     context.Passengers.AddRange(passengersToAdd);
                     context.SaveChanges();

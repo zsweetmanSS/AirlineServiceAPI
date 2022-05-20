@@ -29,6 +29,9 @@ namespace AirlineServiceAPI.Controllers
         {
             return await _context.Bookings
                 .Include(b => b.Flight)
+                .ThenInclude(f => f.ArrivalAirport)
+                .Include(b => b.Flight)
+                .ThenInclude(f => f.DepartureAirport)
                 .Include(b => b.Passenger)
                 .ToListAsync();
         }
@@ -39,6 +42,9 @@ namespace AirlineServiceAPI.Controllers
         {
             var booking = await _context.Bookings
                 .Include(b => b.Flight)
+                .ThenInclude(f => f.ArrivalAirport)
+                .Include(b => b.Flight)
+                .ThenInclude(f => f.DepartureAirport)
                 .Include(b => b.Passenger)
                 .FirstAsync(b => b.ConfirmationNumber == confirmationNumber);
 

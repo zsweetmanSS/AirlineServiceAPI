@@ -24,6 +24,8 @@ namespace AirlineServiceAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Flight>>> GetFlights() {
             return await _context.Flights
+                .Include(f => f.ArrivalAirport)
+                .Include(f => f.DepartureAirport)
                 .ToListAsync();
         }
 
@@ -64,8 +66,10 @@ namespace AirlineServiceAPI.Controllers
             if (number != flight.Number) {
                 return BadRequest();
             }
-
-            _context.Entry(flight).State = EntityState.Modified;
+            var departureAirport = await _context.Airports.FirstAsync(a => a.Id == flight.DepartureAirport.Id);
+            var arrivalAirport = await _context.Airports.FirstAsync(a => a.Id == flight.ArrivalAirport.Id);
+            var flightTemp = new Flight() { Number = flight.Number, MaxCapacity = flight.MaxCapacity, ArrivalDate = flight.ArrivalDate, DepartureDate = flight.DepartureDate, ArrivalAirport = arrivalAirport, DepartureAirport = departureAirport };
+            _context.Entry(flightTemp).State = EntityState.Modified;
 
             try {
                 await _context.SaveChangesAsync();
@@ -86,10 +90,13 @@ namespace AirlineServiceAPI.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linknumber=2123754
         [HttpPost]
         public async Task<ActionResult<Flight>> PostFlight(Flight flight) {
-            _context.Flights.Add(flight);
+            var departureAirport = await _context.Airports.FirstAsync(a => a.Id == flight.DepartureAirport.Id);
+            var arrivalAirport = await _context.Airports.FirstAsync(a => a.Id == flight.ArrivalAirport.Id);
+            var flightTemp = new Flight() { MaxCapacity = flight.MaxCapacity, ArrivalDate = flight.ArrivalDate, DepartureDate = flight.DepartureDate, ArrivalAirport = arrivalAirport, DepartureAirport = departureAirport };
+            _context.Flights.Add(flightTemp);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFlight", new { number = flight.Number }, flight);
+            return CreatedAtAction("GetFlight", new { number = flightTemp.Number }, flightTemp);
         }
 
 

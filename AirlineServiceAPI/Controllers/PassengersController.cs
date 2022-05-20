@@ -42,7 +42,8 @@ namespace AirlineServiceAPI.Controllers
                 .ToListAsync();
             var passengerVM = new PassengerBookingsViewModel() { 
                 Id = id,
-                Name = passenger.Name,
+                FirstName = passenger.FirstName,
+                LastName = passenger.LastName,
                 Job = passenger.Job,
                 Email = passenger.Email,
                 Age = passenger.Age,

@@ -11,7 +11,16 @@ ConfigurationManager configuration = builder.Configuration;
 IWebHostEnvironment environment = builder.Environment;
 
 // Add services to the container.
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowAll",
+        policy =>
+        {
+            policy.AllowAnyOrigin();
+            policy.AllowAnyMethod();
+            policy.AllowAnyHeader();
+        });
+});
 builder.Services.AddControllers();
 builder.Services.AddLogging();
 builder.Services.Configure<JsonSerializerOptions>(options =>
@@ -40,7 +49,7 @@ if (app.Environment.IsDevelopment()) {
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAll");
 app.UseAuthorization();
 
 app.MapControllers();
