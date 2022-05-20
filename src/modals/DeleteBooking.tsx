@@ -19,11 +19,12 @@ function DeleteBooking(props: dpProps) {
   
     function DoubleAction() {
         APIService.deleteBooking(props.confirmationNumber);
+        window.location.reload();
         handleClose();
     }
     return (
       <>
-        <Button variant="primary" onClick={handleShow}>
+        <Button className="color-button" onClick={handleShow}>
           Delete Booking
         </Button>
         <Modal show={show} onHide={handleClose}>
@@ -37,7 +38,7 @@ function DeleteBooking(props: dpProps) {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={DoubleAction}>
+            <Button className="color-button" onClick={DoubleAction}>
               Submit
             </Button>
           </Modal.Footer>

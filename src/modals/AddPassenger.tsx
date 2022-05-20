@@ -6,6 +6,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import APIService from '../services/apiService';
 import { resolveModuleNameFromCache } from 'typescript';
+import '../style/styleGuide.css';
 
 type AddPassengerProps = {
     
@@ -73,12 +74,13 @@ class AddPassenger extends React.Component<AddPassengerProps, AddPassengerState>
             email : this.state.email, 
             age : this.state.age};
         APIService.createPassenger(pass);
+        window.location.reload();
         this.handleClose();
     }
     render() {
         return (
             <>
-                <Button variant="primary" onClick={this.handleShow}>
+                <Button className="color-button" onClick={this.handleShow}>
                 Add New Passenger
                 </Button>
         
@@ -117,7 +119,7 @@ class AddPassenger extends React.Component<AddPassengerProps, AddPassengerState>
                         <Button variant="secondary" onClick={this.handleClose}>
                         Close
                         </Button>
-                        <Button variant="primary" type="submit">
+                        <Button className="color-button" type="submit">
                         Submit
                         </Button>
                     </Form>

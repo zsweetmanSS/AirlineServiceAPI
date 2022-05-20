@@ -17,11 +17,12 @@ function DeleteFlight(props: dpProps) {
   
     function DoubleAction() {
         APIService.deleteFlight(props.number);
+        window.location.reload();
         handleClose();
     }
     return (
       <>
-        <Button variant="primary" onClick={handleShow}>
+        <Button className="color-button" onClick={handleShow}>
           Delete Flight
         </Button>
         <Modal show={show} onHide={handleClose}>
@@ -35,7 +36,7 @@ function DeleteFlight(props: dpProps) {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={DoubleAction}>
+            <Button className="color-button" onClick={DoubleAction}>
               Submit
             </Button>
           </Modal.Footer>

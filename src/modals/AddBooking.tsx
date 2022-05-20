@@ -69,13 +69,17 @@ class AddBooking extends React.Component<AddBookingProps, AddBookingState> {
     handleSubmit(event: React.SyntheticEvent<HTMLFormElement>) {
         //let id: number = 7;
         event.preventDefault();
-        APIService.createNewBooking(this.state.flight as Flight, this.state.passenger as Passenger);
+        APIService.createNewBooking(this.state.flight as Flight, this.state.passenger as Passenger)
+        // .then(response => {
+        //         window.alert(response.data);
+        // });
+        window.location.reload();
         this.handleClose();
     }
     render() {
         return (
             <>
-                <Button variant="primary" onClick={this.handleShow}>
+                <Button className="color-button" onClick={this.handleShow}>
                 Add New Booking
                 </Button>
         
@@ -144,7 +148,7 @@ class AddBooking extends React.Component<AddBookingProps, AddBookingState> {
                         <Button variant="secondary" onClick={this.handleClose}>
                         Close
                         </Button>
-                        <Button variant="primary" type="submit">
+                        <Button className="color-button" type="submit">
                         Save Changes
                         </Button>
                     </Form>

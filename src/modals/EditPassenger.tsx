@@ -79,12 +79,13 @@ class EditPassenger extends React.Component<EditPassengerProps, EditPassengerSta
             email : this.state.email, 
             age : this.state.age};
         APIService.updatePassenger(pass);
+        window.location.reload();
         this.handleClose();
     }
     render() {
         return (
             <>
-                <Button variant="primary" onClick={this.handleShow}>
+                <Button className="color-button" onClick={this.handleShow}>
                 Edit Passenger
                 </Button>
         
@@ -123,7 +124,7 @@ class EditPassenger extends React.Component<EditPassengerProps, EditPassengerSta
                         <Button variant="secondary" onClick={this.handleClose}>
                         Close
                         </Button>
-                        <Button variant="primary" type="submit">
+                        <Button className="color-button" type="submit">
                         Save Changes
                         </Button>
                     </Form>

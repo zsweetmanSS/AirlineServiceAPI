@@ -78,12 +78,13 @@ type EditBookingState = {
             flightNumber : this.state.flightNumber,
         }
         APIService.updateBooking(pass);
+        window.location.reload();
         this.handleClose();
     }
     render() {
         return (
             <>
-                <Button variant="primary" onClick={this.handleShow}>
+                <Button className="color-button" onClick={this.handleShow}>
                 Edit Booking
                 </Button>
         
@@ -136,14 +137,14 @@ type EditBookingState = {
                                 <br/>
                                 Date: {this.state.flight.departureDate.substring(0,10)}
                                 <br/>
-                                Time: {this.state.flight.departureDate.substring(11,19)}
+                                Time: {this.state.flight.departureDate.substring(11,16)}
                                 <br/>
                                 <h5>Arrival</h5>
                                 City: {this.state.flight.arrivalAirport.name}
                                 <br/>
                                 Date: {this.state.flight.arrivalDate.substring(0,10)}
                                 <br/>
-                                Time: {this.state.flight.arrivalDate.substring(11,19)}
+                                Time: {this.state.flight.arrivalDate.substring(11,16)}
                                 </>
                             </div>
                         </Form.Group>
@@ -151,7 +152,7 @@ type EditBookingState = {
                         <Button variant="secondary" onClick={this.handleClose}>
                         Close
                         </Button>
-                        <Button variant="primary" type="submit">
+                        <Button className="color-button" type="submit">
                         Save Changes
                         </Button>
                     </Form>

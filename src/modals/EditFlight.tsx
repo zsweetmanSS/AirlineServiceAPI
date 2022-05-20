@@ -37,9 +37,9 @@ class EditFlight extends React.Component<EditFlightProps, EditFlightState> {
         this.state = {
             number: this.props.Flight.number,
             departureDay: this.props.Flight.departureDate.substring(0,10),
-            departureTime: this.props.Flight.departureDate.substring(11,19),
+            departureTime: this.props.Flight.departureDate.substring(11,16),
             arrivalDay: this.props.Flight.arrivalDate.substring(0,10),
-            arrivalTime: this.props.Flight.arrivalDate.substring(11,19),
+            arrivalTime: this.props.Flight.arrivalDate.substring(11,16),
             maxCapacity : this.props.Flight.maxCapacity,
             arrivalAirport : this.props.Flight.arrivalAirport,
             departureAirport : this.props.Flight.departureAirport,
@@ -97,19 +97,20 @@ class EditFlight extends React.Component<EditFlightProps, EditFlightState> {
         event.preventDefault();
         let changedFlight: Flight = {
             number: this.state.number,
-            departureDate: `${this.state.departureDay}T${this.state.departureTime}.000Z`,
-            arrivalDate: `${this.state.arrivalDay}T${this.state.arrivalTime}.000Z`,
+            departureDate: `${this.state.departureDay}T${this.state.departureTime}:00.000Z`,
+            arrivalDate: `${this.state.arrivalDay}T${this.state.arrivalTime}:00.000Z`,
             maxCapacity : this.state.maxCapacity,
             arrivalAirport : this.state.arrivalAirport,
             departureAirport : this.state.departureAirport,
         }
         APIService.updateFlight(changedFlight);
+        window.location.reload();
         this.handleClose();
     }
     render() {
         return (
             <>
-                <Button variant="primary" onClick={this.handleShow}>
+                <Button className="color-button" onClick={this.handleShow}>
                 Edit Flight
                 </Button>
         
@@ -136,11 +137,11 @@ class EditFlight extends React.Component<EditFlightProps, EditFlightState> {
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="departureDay">
                             <Form.Label>Departure Day (yyyy-mm-dd)</Form.Label>
-                            <Form.Control type="departureDay" name="departureDay" onChange={this.onDepartureDayChanged} value={this.state.departureDay} placeholder="Enter Departure Day" />
+                            <Form.Control type="date" name="departureDay" onChange={this.onDepartureDayChanged} value={this.state.departureDay} placeholder="Enter Departure Day" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="departureTime">
                             <Form.Label>Departure Time (00:00:00)</Form.Label>
-                            <Form.Control type="departureTime" name="departureTime" onChange={this.onDepartureTimeChanged} value={this.state.departureTime} placeholder="Enter Departure Time" />
+                            <Form.Control type="time" name="departureTime" onChange={this.onDepartureTimeChanged} value={this.state.departureTime} placeholder="Enter Departure Time" />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Arrival Airport</Form.Label>
@@ -155,11 +156,11 @@ class EditFlight extends React.Component<EditFlightProps, EditFlightState> {
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="arrivalDay">
                             <Form.Label>Arrival Day (yyyy-mm-dd)</Form.Label>
-                            <Form.Control type="arrivalDay" name="arrivalDay" onChange={this.onArrivalDayChanged} value={this.state.arrivalDay} placeholder="Enter Arrival Day" />
+                            <Form.Control type="date" name="arrivalDay" onChange={this.onArrivalDayChanged} value={this.state.arrivalDay} placeholder="Enter Arrival Day" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="arrivalTime">
                             <Form.Label>Arrival Time (00:00:00)</Form.Label>
-                            <Form.Control type="arrivalTime" name="arrivalTime" onChange={this.onArrivalTimeChanged} value={this.state.arrivalTime} placeholder="Enter Arrival Time" />
+                            <Form.Control type="time" name="arrivalTime" onChange={this.onArrivalTimeChanged} value={this.state.arrivalTime} placeholder="Enter Arrival Time" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="capacity">
                             <Form.Label>Max Capacity</Form.Label>
@@ -191,7 +192,7 @@ class EditFlight extends React.Component<EditFlightProps, EditFlightState> {
                         <Button variant="secondary" onClick={this.handleClose}>
                         Close
                         </Button>
-                        <Button variant="primary" type="submit">
+                        <Button className="color-button" type="submit">
                         Submit
                         </Button>
                     </Form>

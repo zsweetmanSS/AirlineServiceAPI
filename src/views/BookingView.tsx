@@ -12,6 +12,7 @@ import EditBooking from '../modals/EditBooking';
 import AddBooking from '../modals/AddBooking';
 import DeleteBooking from '../modals/DeleteBooking';
 
+
 type BookingViewProps = {
     BookingList: Booking[],
     PassengerList: Passenger[],

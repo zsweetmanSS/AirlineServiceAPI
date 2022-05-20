@@ -15,6 +15,7 @@ import Passenger from './dataModels/Passenger';
 import Flight from './dataModels/Flight';
 import Booking from './dataModels/Booking';
 import Airport from './dataModels/Airport';
+import './style/styleGuide.css';
 
 type AppProps = {
 
@@ -82,7 +83,7 @@ class App extends React.Component<AppProps, AppState> {
     return (
       <>
           <header>
-            <Navbar bg="dark" variant="dark">
+            <Navbar className="color-nav">
               <Container>
                 <Navbar.Brand href="Passenger">Airline Service Manager v1</Navbar.Brand>
                 <Nav className="me-auto">

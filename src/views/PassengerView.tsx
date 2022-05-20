@@ -14,16 +14,13 @@ import { resolveModuleNameFromCache } from 'typescript';
 type PassengerViewProps = {
     PassengerList: Passenger[]
 }
-
 type PassengerViewState  = {
     
 }
-  
 class PassengerView extends React.Component<PassengerViewProps, PassengerViewState> {
     // state: PassengerViewState = {
     //     PassengerList: [],
     // };
-
     // componentDidMount() {
     //     APIService.getPassengers()
     //       .then((response) => {
