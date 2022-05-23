@@ -125,12 +125,12 @@ class AddFlight extends React.Component<AddFlightProps, AddFlightState> {
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="departureDay">
                             <Form.Label>Departure Day (yyyy-mm-dd)</Form.Label>
-                            <Form.Control type="date" name="departureDay" onChange={this.onDepartureDayChanged} value={this.state.departureDay} placeholder="Enter Departure Day" />
+                            <Form.Control required type="date" name="departureDay" onChange={this.onDepartureDayChanged} value={this.state.departureDay} placeholder="Enter Departure Day" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="departureTime">
                             <Form.Label>Departure Time (00:00:00)</Form.Label>
                             {/* <TimePicker showSecond={false} defaultValue={moment().hour(0).minute(0)} format={"hh:mm:ss a"} onChange={this.onDepartureTimeChanged} use12Hours inputReadOnly }></TimePicker> */}
-                            <Form.Control type="time" name="departureTime" onChange={this.onDepartureTimeChanged} value={this.state.departureTime} placeholder="Enter Departure Time" />
+                            <Form.Control required type="time" name="departureTime" onChange={this.onDepartureTimeChanged} value={this.state.departureTime} placeholder="Enter Departure Time" />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Arrival Airport</Form.Label>
@@ -145,15 +145,15 @@ class AddFlight extends React.Component<AddFlightProps, AddFlightState> {
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="arrivalDay">
                             <Form.Label>Arrival Day (yyyy-mm-dd)</Form.Label>
-                            <Form.Control type="date" name="arrivalDay" onChange={this.onArrivalDayChanged} value={this.state.arrivalDay} placeholder="Enter Arrival Day" />
+                            <Form.Control required type="date" name="arrivalDay" onChange={this.onArrivalDayChanged} value={this.state.arrivalDay} placeholder="Enter Arrival Day" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="arrivalTime">
                             <Form.Label>Arrival Time (00:00:00)</Form.Label>
-                            <Form.Control type="time" name="arrivalTime" onChange={this.onArrivalTimeChanged} value={this.state.arrivalTime} placeholder="Enter Arrival Time" />
+                            <Form.Control required type="time" name="arrivalTime" onChange={this.onArrivalTimeChanged} value={this.state.arrivalTime} placeholder="Enter Arrival Time" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="capacity">
                             <Form.Label>Max Capacity</Form.Label>
-                            <Form.Control type="capacity" name="capacity" onChange={this.onMaxCapacityChanged} value={this.state.maxCapacity} placeholder="Enter Max Capacity" />
+                            <Form.Control required type="capacity" name="capacity" onChange={this.onMaxCapacityChanged} value={this.state.maxCapacity} placeholder="Enter Max Capacity" />
                         </Form.Group>
                 
                         {/* <Form.Group className="mb-3" controlId="lastName">

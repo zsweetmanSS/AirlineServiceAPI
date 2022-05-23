@@ -97,11 +97,11 @@ class EditPassenger extends React.Component<EditPassengerProps, EditPassengerSta
                     <Form onSubmit={this.handleSubmit}>
                         <Form.Group className="mb-3" controlId="firstName">
                         <Form.Label>First Name</Form.Label>
-                        <Form.Control type="firstName" name="firstName" onChange={this.onFirstNameChanged} value={this.state.firstName} placeholder="Enter First Name" />
+                        <Form.Control required type="firstName" name="firstName" onChange={this.onFirstNameChanged} value={this.state.firstName} placeholder="Enter First Name" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="lastName">
                             <Form.Label>Last Name</Form.Label>
-                            <Form.Control type="lastName" name="lastName" onChange={this.onLastNameChanged} value={this.state.lastName} placeholder="Enter Last Name" />
+                            <Form.Control required type="lastName" name="lastName" onChange={this.onLastNameChanged} value={this.state.lastName} placeholder="Enter Last Name" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="job">
                             <Form.Label>Job</Form.Label>
@@ -109,8 +109,8 @@ class EditPassenger extends React.Component<EditPassengerProps, EditPassengerSta
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="email">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" name="email" onChange={this.onEmailChanged} value={this.state.email} placeholder="name@example.com" />
-                            <Form.Text className="text-muted">
+                            <Form.Control required type="email" name="email" onChange={this.onEmailChanged} value={this.state.email} placeholder="name@example.com" />
+                            <Form.Text  className="text-muted">
                                 We'll never share your email with anyone else.
                             </Form.Text> 
                         </Form.Group>
